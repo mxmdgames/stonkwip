@@ -1,4 +1,5 @@
 import plotly.graph_objects as go
+import streamlit as st
 
 def create_gauge(title, value):
     ranges = [0, 20, 40, 60, 80, 100]
