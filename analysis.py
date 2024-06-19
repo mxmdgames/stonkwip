@@ -35,3 +35,4 @@ def calculate_fear_greed_index(data):
     volume_normalized = (data['Volume'] - data['Volume'].min()) / (data['Volume'].max() - data['Volume'].min()) * 100
     fear_greed_index = (rsi_normalized + sma_normalized + volume_normalized) / 3
     return fear_greed_index
+ 
