@@ -1,10 +1,6 @@
 import streamlit as st
 import yfinance as yf
 import pandas as pd
-import plotly.graph_objects as go
-import ta
-from functools import lru_cache
-import options_data
 from analysis import load_data, calculate_technical_indicators
 from plotting import create_gauge, plot_candlestick, plot_indicators
 
@@ -42,7 +38,30 @@ ticker = st.text_input("Enter Stock Ticker", value="GME", max_chars=10)
 # Time frame selection
 time_frame = st.selectbox("Select Time Frame", ["Intraday", "1 Day", "5 Day", "1 Month", "6 Months", "1 Year", "YTD", "5Y", "4 Hour"])
 
-# Fetching stock data
+# Mapping time frames to yfinance intervals
+time_frame_mapping = {
+    "Intraday": "5m",
+    "1 Day": "1d",
+    "5 Day": "1d",
+    "1 Month": "1d",
+    "6 Months": "1d",
+    "1 Year": "1d",
+    "YTD": "1d",
+    "5Y": "1d",
+}
+
+period_mapping = {
+    "Intraday": "1d",
+    "1 Day": "1d",
+    "5 Day": "5d",
+    "1 Month": "1mo",
+    "6 Months": "6mo",
+    "1 Year": "1y",
+    "YTD": "ytd",
+    "5Y": "5y",
+}
+
+# Initialize period and interval
 interval = time_frame_mapping.get(time_frame, "1d")
 period = period_mapping.get(time_frame, "1d")
 
@@ -85,5 +104,3 @@ if not data.empty:
 
 else:
     st.error("Failed to load data. Please check the ticker symbol and date range.")
-
-# Add options data and other functionalities as needed
